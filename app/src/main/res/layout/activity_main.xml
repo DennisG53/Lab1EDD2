@@ -10,7 +10,7 @@
         android:id="@+id/btnBuscador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Buscar"
         tools:layout_editor_absoluteX="280dp"
         tools:layout_editor_absoluteY="98dp" />
 
@@ -27,7 +27,7 @@
         android:id="@+id/btnLeer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Leer"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="177dp" />
 
@@ -35,8 +35,7 @@
         android:id="@+id/txtvResultado"
         android:layout_width="297dp"
         android:layout_height="149dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="344dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="276dp" />
 
 </android.support.constraint.ConstraintLayout>
