@@ -33,9 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
 
+
     //ListView Lista;
     Button btnCargar;
     TextView tvLectura;
+    Button btnLZW;
 
 
     @Override
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnCargar = (Button) findViewById(R.id.btnCargar);
         tvLectura = (TextView) findViewById(R.id.tvLectura);
+        btnLZW = (Button) findViewById(R.id.btnLZW);
 
 
         btnCargar.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +63,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+    static final int MAX_CHAR = 256;
+    static String lectura;
+
+
+    public void buttonOnClickLZW(View v)
+    {
+        String testsss = "wabbawabba";
+        LZW prueba = new LZW();
+        ArrayList<String> test = prueba.ArmarTabla(testsss);
+        Toast.makeText(this,"Armada?",Toast.LENGTH_SHORT);
+
+    }
+
+    static void getOccuringChar(String str)
+    {
+
+        // Create an array of size 256 i.e. ASCII_SIZE
+        int count[] = new int[MAX_CHAR];
+
+        int len = str.length();
+
+        // Initialize count array index
+        for (int i = 0; i < len; i++)
+            count[str.charAt(i)]++;
+
+        // Create an array of given String size
+        char ch[] = new char[str.length()];
+        for (int i = 0; i < len; i++) {
+            ch[i] = str.charAt(i);
+            int find = 0;
+            for (int j = 0; j <= i; j++) {
+
+                // If any matches found
+                if (str.charAt(i) == ch[j])
+                    find++;
+            }
+
+            if (find == 1)
+                System.out.println("Number of Occurrence of " +
+                        str.charAt(i) + " is:" + count[str.charAt(i)]);
+        }
+    }
+
 
     //Con esto se lee el contenido del archivo seleccionado
     private String readText(String input)
@@ -77,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 text.append("\n");
             }
             br.close();
+
+            getOccuringChar(line);
         }
         catch (IOException e)
         {
@@ -106,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 path = path.substring(path.indexOf(":") + 1);
                 Toast.makeText(this,""+path,Toast.LENGTH_SHORT).show();
 
+                lectura = readText(path);
                 tvLectura.setText(readText(path));
             }
         }
