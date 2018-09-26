@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
+import Package.LZW;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 performFileSearch();
             }
         });
+
+
+
 
     }
 
@@ -107,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,""+path,Toast.LENGTH_SHORT).show();
 
                 tvLectura.setText(readText(path));
+
             }
         }
     }
