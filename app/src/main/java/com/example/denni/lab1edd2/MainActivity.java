@@ -20,6 +20,8 @@ import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +29,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
-import Package.LZW;
+
+import static java.security.AccessController.getContext;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     //ListView Lista;
     Button btnCargar;
     TextView tvLectura;
+
 
 
     @Override
@@ -53,24 +58,39 @@ public class MainActivity extends AppCompatActivity {
         btnCargar = (Button) findViewById(R.id.btnCargar);
         tvLectura = (TextView) findViewById(R.id.tvLectura);
 
+        String prueba = "wabbawabba";
+        lzw.Compresion(prueba);
+        List<Integer> p= new ArrayList<Integer>();
+        p=lzw.Compresion(prueba);
+        String h= p.toString();
+        int x=0;
 
         btnCargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performFileSearch();
+                performFileSearch(); //1
+
+                String prueba = "wabbawabba";
+                List<Integer> p= new ArrayList<Integer>();
+                p=lzw.Compresion(prueba);
+                String h= p.toString();
+                int x=0;
             }
         });
 
-
-
-
+       // lzw.Compresion(readText(tvLectura));
+        int a=0;
     }
 
     //Con esto se lee el contenido del archivo seleccionado
     private String readText(String input)
     {
+
+
+        //FileReader f = new FileReader(input);
         File file = new File(input);
         StringBuilder text = new StringBuilder();
+        int a=0;
         try
         {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -88,10 +108,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return text.toString();
+
     }
 
     //Seleccionar los archivos desde el storage
-    private void performFileSearch()
+    private void performFileSearch() //2
     {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -110,12 +131,22 @@ public class MainActivity extends AppCompatActivity {
                 path = path.substring(path.indexOf(":") + 1);
                 Toast.makeText(this,""+path,Toast.LENGTH_SHORT).show();
 
-                tvLectura.setText(readText(path));
+
+
+                String texto=readText(path);
+                lzw.Compresion(texto);
+                List<Integer> p= new ArrayList<Integer>();
+                p=lzw.Compresion(texto);
+                String resultadoCompresion= p.toString();
+
+                tvLectura.setText(resultadoCompresion);
+
 
             }
         }
     }
 
+    //permisos
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_STORAGE)
