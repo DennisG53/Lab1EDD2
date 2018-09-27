@@ -38,6 +38,7 @@ public class lzw {
             // Output the code for w.
             if (!w.equals(""))
                 result.add(dictionary.get(w));
+
             int x=1;
             String res ="";
             Object vec[] = result.toArray();

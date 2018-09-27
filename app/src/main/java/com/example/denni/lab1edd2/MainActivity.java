@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> p= new ArrayList<Integer>();
         p=lzw.Compresion(prueba);
         String h= p.toString();
+        String f=lzw.Descompresion(p);
         int x=0;
 
         btnCargar.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 String texto=readText(path);
+
                 lzw.Compresion(texto);
                 List<Integer> p= new ArrayList<Integer>();
                 p=lzw.Compresion(texto);
@@ -144,11 +146,9 @@ public class MainActivity extends AppCompatActivity {
 
                 tvLectura.setText(resultadoCompresion);
 
-                List<Integer> lista= new ArrayList<Integer>();
-                lista=lzw.Compresion(texto);
-                String resultadoDescompresion= p.toString();
                 lzw.Descompresion(p);
-                tvDescompresion.setText(resultadoCompresion);
+
+                tvDescompresion.setText( lzw.Descompresion(p) );
 
 
             }
