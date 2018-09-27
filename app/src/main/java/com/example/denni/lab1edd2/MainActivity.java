@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     //ListView Lista;
     Button btnCargar;
+    Button btnDescompresion;
     TextView tvLectura;
+    TextView tvDescompresion;
 
 
 
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
         btnCargar = (Button) findViewById(R.id.btnCargar);
         tvLectura = (TextView) findViewById(R.id.tvLectura);
 
+
+        tvDescompresion = (TextView) findViewById(R.id.tvDescompresion);
+
         String prueba = "wabbawabba";
         lzw.Compresion(prueba);
         List<Integer> p= new ArrayList<Integer>();
@@ -70,13 +75,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 performFileSearch(); //1
 
-                String prueba = "wabbawabba";
-                List<Integer> p= new ArrayList<Integer>();
-                p=lzw.Compresion(prueba);
-                String h= p.toString();
-                int x=0;
             }
         });
+
+
 
        // lzw.Compresion(readText(tvLectura));
         int a=0;
@@ -138,8 +140,15 @@ public class MainActivity extends AppCompatActivity {
                 List<Integer> p= new ArrayList<Integer>();
                 p=lzw.Compresion(texto);
                 String resultadoCompresion= p.toString();
+                //char a[] = resultadoCompresion.toCharArray();
 
                 tvLectura.setText(resultadoCompresion);
+
+                List<Integer> lista= new ArrayList<Integer>();
+                lista=lzw.Compresion(texto);
+                String resultadoDescompresion= p.toString();
+                lzw.Descompresion(p);
+                tvDescompresion.setText(resultadoCompresion);
 
 
             }

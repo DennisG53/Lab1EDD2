@@ -11,11 +11,11 @@ public class lzw {
         /** Compress a string to a list of output symbols. */
         public static List<Integer> Compresion(String uncompressed) {
             // Build the dictionary.
-            int dictSize = 256;
+            int TamañoDiccionario = 256;
 
             int j=0;
             Map<String, Integer> dictionary = new HashMap<String, Integer>();
-           // Map<String, Integer> dictionaryP = new HashMap<String, Integer>();
+            Map<String, Integer> dictionaryP = new HashMap<String, Integer>();
             for (int i = 0; i < 256; i++)
                 dictionary.put("" + (char) i, i);
 
@@ -30,7 +30,7 @@ public class lzw {
                 else {
                     result.add(dictionary.get(w));
                     // Add wc to the dictionary.
-                    dictionary.put(wc, dictSize++);
+                    dictionary.put(wc, TamañoDiccionario++);
                     w = "" + c;
                 }
             }
@@ -38,26 +38,49 @@ public class lzw {
             // Output the code for w.
             if (!w.equals(""))
                 result.add(dictionary.get(w));
-
+            int x=1;
+            String res ="";
             Object vec[] = result.toArray();
-            for (int i=0; i < result.size(); i ++){
+            for(int i=0; i<result.size();i++){
 
+                res=vec[i].toString();
+                dictionaryP.put(res,x++);
             }
 
-            int VEC2[]=null;
-            int contador =0;
-            for (int i = 0; i < vec.length-1; i++) {
-                if(vec[i]==vec[i+1]){
-                    contador++;
-                }
-                VEC2=new int[contador];
+            for(int i=0; i<dictionaryP.size();i++){
+                result2.add(dictionaryP.get(i));
             }
-
-
 
             return result;
         }
 
 
+    public static String Descompresion(List<Integer> compressed) {
+        // Build the dictionary.
+        int dictSize = 256;
+        Map<Integer,String> dictionary = new HashMap<Integer,String>();
+        for (int i = 0; i < 256; i++)
+            dictionary.put(i, "" + (char)i);
+
+        String w = "" + (char)(int)compressed.remove(0);
+        StringBuffer result = new StringBuffer(w);
+        for (int k : compressed) {
+            String entry;
+            if (dictionary.containsKey(k))
+                entry = dictionary.get(k);
+            else if (k == dictSize)
+                entry = w + w.charAt(0);
+            else
+                throw new IllegalArgumentException("Bad compressed k: " + k);
+
+            result.append(entry);
+
+            // Add w+entry[0] to the dictionary.
+            dictionary.put(dictSize++, w + entry.charAt(0));
+
+            w = entry;
+        }
+        return result.toString();
+    }
 
 }
